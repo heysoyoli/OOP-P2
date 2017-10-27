@@ -8,6 +8,8 @@ public class Ventana extends JFrame{
 
   private JPanel panelLeft, panelMiddle, panelRight;
 
+  private Vuelo vuelo;
+
 //LABELS FOR INPUT
   private JLabel labelNombre;
   private JLabel labelCorreo;
@@ -23,6 +25,7 @@ public class Ventana extends JFrame{
 //INPUT FIELDS & DROPDOWN
   private JTextField fieldNombre;
   private JTextField fieldCorreo;
+  private JTextField fieldAsiento;
 
 //DROPDOWN
   private JComboBox dropTipo;
@@ -36,6 +39,7 @@ public class Ventana extends JFrame{
 
 //CONSTRUCTOR
   public Ventana(){
+    vuelo = new Vuelo();
     setSize(1280, 720);
     setTitle("Examen Segundo Parcial");
     initComponents();
@@ -74,8 +78,8 @@ public class Ventana extends JFrame{
       //Asiento
       labelAsiento = new JLabel("Asiento");
       panelLeft.add(labelAsiento);
-      dropAsiento = new JComboBox(asientos);
-      panelLeft.add(dropAsiento);
+      fieldAsiento = new JTextField("Input", 14);
+      panelLeft.add(fieldAsiento);
 
       //AGREGAR
       botonAgregar = new JButton("Agregar");
@@ -86,7 +90,7 @@ public class Ventana extends JFrame{
       //OUTPUT
 
       panelRight = new JPanel();
-      panelRight.setLayout(new GridLayout(27,1));
+      panelRight.setLayout(new GridLayout(1,1));
 
       labelPasajeros = new JLabel("Pasajeros");
       panelRight.add(labelPasajeros);
@@ -107,14 +111,28 @@ public class Ventana extends JFrame{
 public class ListenerAgregar implements ActionListener{
 
   public void actionPerformed(ActionEvent event){
-      labelPasajero1.setText("Agregaste un pasajero");
+      Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText());
+      int numeroAsiento = Integer.parseInt(fieldAsiento.getText());
+      vuelo.addPasajero(numeroAsiento, pas);
+      mostrarListaVuelo();
 
   }
 
 }
 
 
-
+public void mostrarListaVuelo(){
+  String resultado = "<html>";
+  for(int i=0;i<vuelo.getPasajeros().length;i++){
+    if(vuelo.getPasajeros()[i] != null){
+      resultado = resultado+i+ ".- " + vuelo.getPasajeros()[i].getNombre()+"<br/>";
+    }else{
+      resultado = resultado+i+".- Vacio";
+    }
+  }
+  resultado = resultado + "</html>";
+  labelPasajero1.setText(resultado);
+}
 
 
 }

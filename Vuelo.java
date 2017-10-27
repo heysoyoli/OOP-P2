@@ -20,10 +20,4 @@ public class Vuelo{
     pasajeros[index] = pasajero;
   }
 
-  public void removePasajero(int index){
-    pasajeros[index] = null;
-  }
-
-
-
 }
