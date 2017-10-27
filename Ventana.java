@@ -16,7 +16,7 @@ public class Ventana extends JFrame{
   private JLabel labelPasajeros;
 
   //LABELS FOR OUTPUT
-  private JLabel outputPas1;
+  private JLabel labelPasajero1;
 
 
 
@@ -79,7 +79,6 @@ public class Ventana extends JFrame{
 
       //AGREGAR
       botonAgregar = new JButton("Agregar");
-      botonAgregar.setSize(300, 500);
       botonAgregar.addActionListener(new ListenerAgregar());
       panelLeft.add(botonAgregar);
 
@@ -87,10 +86,13 @@ public class Ventana extends JFrame{
       //OUTPUT
 
       panelRight = new JPanel();
-      panelRight.setLayout(new GridLayout(5,1));
+      panelRight.setLayout(new GridLayout(27,1));
 
-      outputPas1 = new JLabel("1.Vacio");
-      panelRight.add(outputPas1);
+      labelPasajeros = new JLabel("Pasajeros");
+      panelRight.add(labelPasajeros);
+
+      labelPasajero1 = new JLabel("1.Vacio");
+      panelRight.add(labelPasajero1);
 
 
 
@@ -105,7 +107,7 @@ public class Ventana extends JFrame{
 public class ListenerAgregar implements ActionListener{
 
   public void actionPerformed(ActionEvent event){
-
+      labelPasajero1.setText("Agregaste un pasajero");
 
   }
 
