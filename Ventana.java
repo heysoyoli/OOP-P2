@@ -127,7 +127,7 @@ public void mostrarListaVuelo(){
     if(vuelo.getPasajeros()[i] != null){
       resultado = resultado+i+ ".- " + vuelo.getPasajeros()[i].getNombre()+"<br/>";
     }else{
-      resultado = resultado+i+".- Vacio";
+      resultado = resultado+i+".- Vacio"+"<br/>";
     }
   }
   resultado = resultado + "</html>";
