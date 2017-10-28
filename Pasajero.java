@@ -1,14 +1,17 @@
 public class Pasajero{
 
-  private String nombre;
-  private String correo;
-  private String tipo;
-  private String asiento;
+  protected String nombre;
+  protected String correo;
+  protected String asiento;
+  protected String tipo;
 
 
-  public Pasajero(String nombre, String correo, String asiento){
+
+  public Pasajero(String nombre, String correo, String asiento, String tipo){
     this.nombre = nombre;
     this.correo = correo;
+    this.asiento = asiento;
+    this.tipo = tipo;
   }
 
   public void setNombre(String nombre){
@@ -33,6 +36,19 @@ public class Pasajero{
 
   public String getAsiento(){
     return asiento;
+  }
+
+  public void setTipo(String tipo){
+    this.tipo = tipo;
+  }
+
+  public String getTipo(){
+    return tipo;
+  }
+
+  public double calcularPrecio(){
+    double precioFinal = 1500 * 1;
+    return precioFinal;
   }
 
 }

@@ -19,19 +19,17 @@ public class Ventana extends JFrame{
 
   //LABELS FOR OUTPUT
   private JLabel labelPasajero1;
+  private JLabel labelTotalText;
+  private JLabel labelTotal;
 
 
 
-//INPUT FIELDS & DROPDOWN
+//INPUT FIELDS
   private JTextField fieldNombre;
   private JTextField fieldCorreo;
   private JTextField fieldAsiento;
+  private JTextField fieldTipo;
 
-//DROPDOWN
-  private JComboBox dropTipo;
-  String[] tipos = {"Normal", "Silver", "Gold"};
-  private JComboBox dropAsiento;
-  String[] asientos = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
 
 //ACTION BUTTON
   private JButton botonAgregar;
@@ -40,7 +38,7 @@ public class Ventana extends JFrame{
 //CONSTRUCTOR
   public Ventana(){
     vuelo = new Vuelo();
-    setSize(1280, 720);
+    setSize(1280, 1000);
     setTitle("Examen Segundo Parcial");
     initComponents();
     setLayout(new GridLayout(1,3));
@@ -72,8 +70,8 @@ public class Ventana extends JFrame{
       //TIPO
       labelTipo = new JLabel("Tipo");
       panelLeft.add(labelTipo);
-      dropTipo = new JComboBox(tipos);
-      panelLeft.add(dropTipo);
+      fieldTipo = new JTextField("Input", 14);
+      panelLeft.add(fieldTipo);
 
       //Asiento
       labelAsiento = new JLabel("Asiento");
@@ -90,13 +88,21 @@ public class Ventana extends JFrame{
       //OUTPUT
 
       panelRight = new JPanel();
-      panelRight.setLayout(new GridLayout(1,1));
+      panelRight.setLayout(new GridLayout(2,1));
 
-      labelPasajeros = new JLabel("Pasajeros");
+      labelPasajeros = new JLabel("Pasajeros:");
       panelRight.add(labelPasajeros);
 
-      labelPasajero1 = new JLabel("1.Vacio");
+      labelPasajero1 = new JLabel();
       panelRight.add(labelPasajero1);
+
+      labelTotalText = new JLabel("Total:");
+      panelRight.add(labelTotalText);
+
+      labelTotal = new JLabel();
+      panelRight.add(labelTotal);
+
+
 
 
 
@@ -111,28 +117,85 @@ public class Ventana extends JFrame{
 public class ListenerAgregar implements ActionListener{
 
   public void actionPerformed(ActionEvent event){
-      Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText());
+      //Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText());
+      //Pasajero pas = verTipoPasajero();
+
+
+
+      Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText(), fieldTipo.getText());
       int numeroAsiento = Integer.parseInt(fieldAsiento.getText());
-      vuelo.addPasajero(numeroAsiento, pas);
+      //String tipo = pas.getTipo();
+      //double finalPrice = calcularPrecioPasajero(tipo);
+      //String precioFin = Double.toString(finalPrice);
+
+      vuelo.addPasajero(numeroAsiento - 1, pas);
+
       mostrarListaVuelo();
 
   }
 
 }
 
+/*public Pasajero verTipoPasajero(){
+
+  if(fieldTipo.getText() == "Silver"){
+     Pasajero pasS = new Silver(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText());
+     return pasS;
+  }else{
+    Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText());
+    return pas;
+}}*/
+
+public double calcularPrecioPasajero(String type){
+
+
+  System.out.println(type);
+
+  if(type.equals("Silver")){
+
+     Silver pasS = new Silver(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText(), fieldTipo.getText());
+     double precioFS = pasS.calcularPrecio();
+     return precioFS;
+     //System.out.println("Silver");
+     //System.out.println(precioFS);
+
+  }else if(type.equals("Gold")){
+
+    Gold pasG = new Gold(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText(), fieldTipo.getText());
+    double precioFG = pasG.calcularPrecio();
+    return precioFG;
+    //System.out.println("Gold");
+    //System.out.println(precioFG);
+
+  }else{
+
+    Pasajero pas = new Pasajero(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText(), fieldTipo.getText());
+    double precioF = pas.calcularPrecio();
+    return precioF;
+  //  System.out.println("Normal");
+  //  System.out.println(precioF);
+
+}}
+
 
 public void mostrarListaVuelo(){
-  String resultado = "<html>";
+  double total = 0;
+  String lista = "<html>";
   for(int i=0;i<vuelo.getPasajeros().length;i++){
     if(vuelo.getPasajeros()[i] != null){
-      resultado = resultado+i+ ".- " + vuelo.getPasajeros()[i].getNombre()+"<br/>";
+      String precioPasajero = Double.toString(calcularPrecioPasajero(vuelo.getPasajeros()[i].getTipo()));
+      total = total + calcularPrecioPasajero(vuelo.getPasajeros()[i].getTipo());
+      lista = lista+(i+1)+ ".- " + vuelo.getPasajeros()[i].getNombre()+ " " + precioPasajero + "<br/>";
     }else{
-      resultado = resultado+i+".- Vacio"+"<br/>";
+      lista = lista+(i+1)+".- Vacio"+"<br/>";
     }
   }
-  resultado = resultado + "</html>";
-  labelPasajero1.setText(resultado);
+  lista = lista + "</html>";
+  labelTotal.setText(Double.toString(total));
+  labelPasajero1.setText(lista);
 }
+
+
 
 
 }
