@@ -149,8 +149,6 @@ public class ListenerAgregar implements ActionListener{
 public double calcularPrecioPasajero(String type){
 
 
-  System.out.println(type);
-
   if(type.equals("Silver")){
 
      Silver pasS = new Silver(fieldNombre.getText() , fieldCorreo.getText(), fieldAsiento.getText(), fieldTipo.getText());
